@@ -18,7 +18,6 @@ The modifications in this repo generate a specific visualization of a specific t
 3. It's written in Python, and the code is well-structured. (Yes, I tried other options, like [JBrowse2](https://jbrowse.org/jb2/) and [SpliceGrapher](https://splicegrapher.sourceforge.net/). No can do. Yes, I've seen [splicejam](https://jmw86069.github.io/splicejam/).)
 
 
-
 ## Modifications from Trackplot
 
 - In density plots, splice-junction arcs are shown only as positive values, starting and ending at X=0, with their peaks corresponding to the junction counts. This features is implemented for linear and log Y-axis scales. X=0 is a bit artificial but it's key to understanding the magnitude of each arc independently. This  feature allows direct comparisons of splice-junction expression levels to each other and to exon coverage, makes it easier to understand what RNA-seq is trying to tell us. The example shows that it can eliminate the need to filter junctions. (plot_func::plot_density)
@@ -31,7 +30,7 @@ The example follows the "intron shrinkage" example from the real Trackplot (to f
 
 ![](docs/PTBP3_mod_specific_transcipts.png)
 
-With --log 10, we can see all the low-count junctions:
+We can see all the low-count junctions with --log 10, which (in this case) means that we don't have to do any filtering just to get a reasonable understanding:
 
 ![](docs/PTBP3_mod_specific_transcipts_log10_edit.png)
 
@@ -47,14 +46,19 @@ With --density-by-strand:
 
 ![](docs/PTBP3_trackplot_all_junctions_specific_transcripts_by_strand_edit.png)
 
-
 To be clear, the modifications described here were a small step following a giant leap forward. For instance, here is how the data looks in IGV:
 
 ![](docs/ptbp3_igv_2.png)
 
+IGV doesn't plot junctions quantitatively. Here is the closest I was able to get with igv-reports for a different gene, after much reverse-engineering:
+
+![](docs/IGV_junctions.png)
+
+The first track shows coverage, heavily biased toward the 3' UTR in this case, but it's very difficult to understand the junctions.
+
 ## Commands
 
-To assigned a fixed length to introns, use an intron scale greater than 1, e.g.:
+To assign a fixed length to introns, use an intron scale greater than 1, e.g.:
 
 ```bash
 --intron-scale 250
@@ -85,7 +89,8 @@ To scale using exising Trackplot features, use:
   --exon-scale 20 \
   --intron-scale 0.10  \
 ```
-  
+
+
 ## Conclusion
 
 Kudos to Yiming Zhang, Ran Zhou and colleagues!
